@@ -12,7 +12,6 @@
     <meta name="author" content="Brayan Rojas">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-site-verification" content="i37QFUWsOav1mNoAYPwPDnBMyz7dt04Dvt-HZTdbXYM" />
 
     <!-- START: Styles -->
 
@@ -23,7 +22,27 @@
 
     <!-- END: Styles -->
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script type="text/javascript">
+(function() {
+emailjs.init("user_yMQGX4OWLczBGy2usl95e");
+})();
+        window.onload = function() {
+            document.getElementById('brayan-contacto-email').addEventListener('submit', function(event) {
+                event.preventDefault();
+                // generate a five digit number for the contact_number variable
+                this.contact_number.value = Math.random() * 100000 | 0;
+                // these IDs from the previous steps
+                emailjs.sendForm('service_flh4249', 'template_w2xxuhe', this)
+                    .then(function() {
+                        document.getElementById('success-contact').style.display="block";
 
+                    }, function(error) {
+                        document.getElementById('error-contact').style.display="block";
+                    });
+            });
+        }
+</script>
 
 </head>
 
@@ -407,25 +426,22 @@
                 </div>
                 <div class="col-lg-7">
                     <!-- START: Form -->
-                    <form action="#" class="brayan-form brayan-form-ajax">
+                    <form action="#" class="brayan-form brayan-form-ajax" id="brayan-contacto-email">
+                         <input type="hidden" name="contact_number">
                         <div class="row vertical-gap">
                             <div class="col-md-6">
-                                <input type="text" class="form-control required" name="name" placeholder="Nombre">
+                                <input type="text" class="form-control required" name="user_name" placeholder="Nombre">
                             </div>
                             <div class="col-md-6">
-                                <input type="email" class="form-control required" name="email" placeholder="E-mail">
+                                <input type="email" class="form-control required" name="user_email" placeholder="E-mail">
                             </div>
                         </div>
-
-                        <div class="brayan-gap-1"></div>
-                        <input type="text" class="form-control required" name="title" placeholder="Titulo">
-
                         <div class="brayan-gap-1"></div>
                         <textarea class="form-control required" name="message" rows="8" placeholder="Descripcion (min. 4 renglones)" aria-required="true"></textarea>
                         <div class="brayan-gap-1"></div>
-                        <div class="brayan-form-response-success"></div>
-                        <div class="brayan-form-response-error"></div>
-                        <button class="brayan-btn">Enviar mensaje</button>
+                        <div class="brayan-form-response-success" id="success-contact" style="display: none;">Tu mensaje ha sido enviado</div>
+                        <div class="brayan-form-response-error" id="error-contact" style="display: none;">Tu mensaje no se pudo enviar correctamente, intentalo de nuevo.</div>
+                        <button class="brayan-btn"><input type="submit" style="border: none; background: transparent; color: #fff;" value="ENVIAR MENSAJE"></button>
                     </form>
                     <!-- END: Form -->
                 </div>
